@@ -1,101 +1,31 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>探索河南</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            color: #333;
-        }
-
-        header {
-            background-color: #000;
-            color: white;
-            text-align: center;
-            padding: 100px 0;
-        }
-
-        h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
-        }
-
-        section {
-            padding: 100px 20%;
-            text-align: center;
-        }
-
-        h2 {
-            font-size: 36px;
-            margin-bottom: 20px;
-        }
-
-        p {
-            font-size: 18px;
-            line-height: 1.6;
-        }
-
-        .image-container {
-            margin-top: 50px;
-        }
-
-        img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 10px;
-        }
-
-        footer {
-            background-color: #000;
-            color: white;
-            text-align: center;
-            padding: 20px 0;
-        }
-    </style>
+    <title>河南足迹地图</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-    <header>
-        <h1>探索河南</h1>
-        <p>感受千年中原文化的魅力</p>
-    </header>
-    <section>
-        <h2>历史悠久</h2>
-        <p>河南是华夏文明的重要发祥地之一，拥有着悠久的历史和灿烂的文化。从古老的甲骨文到雄伟的龙门石窟，每一处古迹都诉说着过去的故事。</p>
-        <div class="image-container">
-            <img src="http://111.7.82.66:8090/wtcp-file/original/20230511/20230511153527531.jpg" alt="河南历史古迹">
+    <div class="container">
+        <div class="header">
+            <h1 class="title">行走河南，读懂中国</h1>
+            <h2>河南省行政区划</h2>
+            <ul id="district-list"></ul>
         </div>
-    </section>
-    <section>
-        <h2>美食盛宴</h2>
-        <p>河南美食丰富多样，烩面、胡辣汤等特色美食让人垂涎欲滴。每一口都能品尝到中原大地的独特风味。</p>
-        <div class="image-container">
-            <img src="http://111.7.82.66:8090/wtcp-file/original/20241031/20241031095207574.jpg" alt="河南美食">
+        <div class="map-container">
+            <canvas id="mapCanvas"></canvas>
         </div>
-    </section>
-    <footer>
-        <p>&copy; 2025 探索河南</p>
-    </footer>
-    <script>
-        // 可以添加更多交互逻辑，例如滚动效果等
-        window.addEventListener('scroll', function () {
-            const sections = document.querySelectorAll('section');
-            sections.forEach(section => {
-                const rect = section.getBoundingClientRect();
-                if (rect.top < window.innerHeight && rect.bottom >= 0) {
-                    section.classList.add('active');
-                } else {
-                    section.classList.remove('active');
-                }
-            });
-        });
-    </script>
+        <div class="footer">
+            <div id="stats">
+                <p>您已到过地市：<span id="cityCount">0</span>个</p>
+            </div>
+            <div class="actions">
+                <button id="exportBtn">导出足迹图片</button>
+                <button id="shareBtn">分享足迹</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
 </body>
-
 </html>
-    
