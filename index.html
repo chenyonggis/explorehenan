@@ -1,31 +1,40 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>河南足迹地图</title>
-    <link rel="stylesheet" href="style.css">
+    <title>河南省足迹地图</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1 class="title">行走河南，读懂中国</h1>
-            <h2>河南省行政区划</h2>
-            <ul id="district-list"></ul>
-        </div>
-        <div class="map-container">
-            <canvas id="mapCanvas"></canvas>
-        </div>
-        <div class="footer">
-            <div id="stats">
-                <p>您已到过地市：<span id="cityCount">0</span>个</p>
+        <header>
+            <h1>行走河南，读懂中国</h1>
+            <div class="toggle-container">
+                <span id="city-toggle" class="active">地市</span> | <span id="county-toggle">县区</span>
             </div>
-            <div class="actions">
-                <button id="exportBtn">导出足迹图片</button>
-                <button id="shareBtn">分享足迹</button>
-            </div>
+        </header>
+        
+        <div class="stats">
+            <p>您已到过地市: <span id="city-count">0</span>个</p>
+        </div>
+        
+        <div id="map-container">
+            <div id="map-chart"></div>
+        </div>
+        
+        <div class="location-list" id="location-list">
+            <!-- 地市或区县列表将动态生成 -->
+        </div>
+        
+        <div class="action-buttons">
+            <button id="export-btn">导出足迹图片</button>
+            <button id="share-btn">分享足迹</button>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

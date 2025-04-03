@@ -1,0 +1,540 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+}
+
+body {
+    background-color: #f5f5f7;
+    color: #1d1d1f;
+}
+
+.container {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #d2d2d7;
+}
+
+h1 {
+    font-size: 24px;
+    font-weight: 500;
+}
+
+.toggle-container {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.toggle-container span {
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.toggle-container span.active {
+    color: #0066cc;
+    font-weight: bold;
+}
+
+.stats {
+    background-color: white;
+    border-radius: 8px;
+    padding: 10px 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    margin-bottom: 15px;
+    text-align: center;
+    font-size: 16px;
+}
+
+#map-container {
+    width: 100%;
+    background-color: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+}
+
+#map-chart {
+    width: 100%;
+    height: 400px;
+}
+
+.location-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.location-item {
+    padding: 8px 15px;
+    border-radius: 20px;
+    background-color: white;
+    border: 1px solid #d2d2d7;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.location-item.selected {
+    background-color: #0066cc;
+    color: white;
+    border-color: #0066cc;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.action-buttons button {
+    padding: 12px 20px;
+    border-radius: 8px;
+    background-color: #0066cc;
+    color: white;
+    border: none;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.action-buttons button:hover {
+    background-color: #004499;
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 20px;
+    }
+    
+    .toggle-container {
+        font-size: 14px;
+    }
+    
+    #map-chart {
+        height: 300px;
+    }
+    
+    .location-item {
+        font-size: 12px;
+        padding: 6px 12px;
+    }
+    
+    .action-buttons button {
+        font-size: 14px;
+        padding: 10px 16px;
+    }
+}
+
+/* 区县分组样式 */
+.city-group {
+    margin-bottom: 15px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    padding: 10px;
+}
+
+.city-title {
+    font-weight: 500;
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 8px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #eee;
+}
+
+.county-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* 响应式调整 */
+@media (max-width: 480px) {
+    .county-list .location-item {
+        font-size: 11px;
+        padding: 5px 8px;
+    }
+}
+
+/* 加载提示样式 */
+.loading-notice {
+    padding: 20px;
+    text-align: center;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    color: #666;
+    width: 100%;
+    font-size: 14px;
+}
+
+/* 过滤器样式 */
+.filter-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    background-color: white;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.filter-label {
+    margin-right: 10px;
+    font-size: 14px;
+    color: #555;
+}
+
+.filter-select {
+    flex-grow: 1;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #d2d2d7;
+    background-color: #f9f9f9;
+    font-size: 14px;
+    color: #333;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='12' height='12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 9L1 4h10z' fill='%23555'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 30px;
+}
+
+.filter-select:focus {
+    outline: none;
+    border-color: #0066cc;
+}
+
+/* 折叠面板样式 */
+.city-panel {
+    margin-bottom: 10px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+.city-header {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.2s;
+}
+
+.city-header:hover {
+    background-color: #f2f2f2;
+}
+
+.expand-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.city-title {
+    flex-grow: 1;
+    font-weight: 500;
+    font-size: 15px;
+    color: #333;
+}
+
+.visited-count {
+    font-size: 12px;
+    color: #666;
+    margin-left: 10px;
+}
+
+/* 区县容器样式 */
+.county-container {
+    max-height: 500px;
+    overflow-y: auto;
+    transition: max-height 0.3s ease;
+    padding: 10px 15px;
+}
+
+.county-container.collapsed {
+    max-height: 0;
+    padding: 0 15px;
+    overflow: hidden;
+}
+
+/* 区县列表样式 */
+.county-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* 改进响应式设计 */
+@media (max-width: 480px) {
+    .city-header {
+        padding: 10px 12px;
+    }
+    
+    .city-title {
+        font-size: 14px;
+    }
+    
+    .visited-count {
+        font-size: 11px;
+    }
+    
+    .expand-icon {
+        width: 18px;
+        height: 18px;
+        font-size: 16px;
+    }
+}
+
+/* 城市和区县列表样式优化 */
+.city-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+}
+
+.city-item {
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    background-color: white;
+    border-left: 4px solid #0066cc;
+}
+
+.city-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    background-color: #f7f9fc;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.2s;
+}
+
+.city-header:hover {
+    background-color: #edf2fa;
+}
+
+.city-name {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    color: #333;
+    font-size: 16px;
+}
+
+.expand-icon {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 22px;
+    height: 22px;
+    margin-right: 10px;
+    background-color: #0066cc;
+    color: white;
+    border-radius: 50%;
+    font-weight: bold;
+    font-size: 14px;
+    transition: transform 0.2s;
+}
+
+.county-container:not(.collapsed) + .city-header .expand-icon {
+    transform: rotate(45deg);
+}
+
+.city-count {
+    font-size: 13px;
+    color: #666;
+    background-color: #f0f4f8;
+    padding: 4px 8px;
+    border-radius: 12px;
+}
+
+.county-container {
+    padding: 15px;
+    max-height: 500px;
+    overflow-y: auto;
+    transition: all 0.3s ease;
+    background-color: white;
+    border-top: 1px solid #eaeaea;
+}
+
+.county-container.collapsed {
+    max-height: 0;
+    padding: 0 15px;
+    overflow: hidden;
+    border-top: none;
+}
+
+/* 区县网格布局 */
+.county-item {
+    display: inline-block;
+    margin: 5px;
+    padding: 6px 12px;
+    border-radius: 15px;
+    background-color: #f5f5f7;
+    text-align: center;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid #e8e8e8;
+}
+
+.county-item:hover {
+    background-color: #e8e8ed;
+    transform: translateY(-2px);
+}
+
+.county-item.visited {
+    background-color: #0066cc;
+    color: white;
+    border-color: #0066cc;
+}
+
+/* 更清晰的分组 */
+.county-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+}
+
+/* 移动端响应式调整 */
+@media (max-width: 480px) {
+    .county-item {
+        font-size: 12px;
+        padding: 5px 10px;
+        margin: 3px;
+    }
+    
+    .city-name {
+        font-size: 14px;
+    }
+    
+    .city-count {
+        font-size: 11px;
+        padding: 3px 6px;
+    }
+    
+    .expand-icon {
+        width: 18px;
+        height: 18px;
+        font-size: 12px;
+    }
+    
+    .county-container {
+        padding: 10px;
+    }
+}
+
+/* 添加表格式布局样式 */
+.county-table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.county-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.county-table tr:nth-child(odd) {
+    background-color: #f7f9fc;
+}
+
+.county-table tr:hover {
+    background-color: #f0f4f9;
+}
+
+.city-cell {
+    width: 120px;
+    padding: 15px;
+    font-weight: 600;
+    color: #0066cc;
+    text-align: center;
+    border-right: 1px solid #e8e8e8;
+    vertical-align: top;
+}
+
+.county-cell {
+    padding: 10px 15px;
+    line-height: 2;
+}
+
+.county-item {
+    display: inline-block;
+    margin: 3px 5px;
+    padding: 4px 10px;
+    border-radius: 15px;
+    background-color: #f5f5f7;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid #e8e8e8;
+}
+
+.county-item:hover {
+    background-color: #e8e8ed;
+    transform: translateY(-1px);
+}
+
+.county-item.visited {
+    background-color: #0066cc;
+    color: white;
+    border-color: #0066cc;
+}
+
+/* 移动端优化 */
+@media (max-width: 768px) {
+    .city-cell {
+        width: 80px;
+        padding: 10px;
+        font-size: 14px;
+    }
+    
+    .county-cell {
+        padding: 8px 10px;
+    }
+    
+    .county-item {
+        font-size: 12px;
+        padding: 3px 8px;
+        margin: 2px 3px;
+    }
+}
+
+/* 添加统计数字样式 */
+.stats span {
+    font-weight: bold;
+    color: #0066cc;
+    font-size: 18px;
+    margin: 0 3px;
+} 
