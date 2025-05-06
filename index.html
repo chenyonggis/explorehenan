@@ -3,38 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>河南省足迹地图</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>地理视角发现河南|河南足迹地图|河南地理挑战|河南地理测验|河南地图</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <script src="js/gtag.js"></script>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>行走河南，读懂中国</h1>
-            <div class="toggle-container">
-                <span id="city-toggle" class="active">地市</span> | <span id="county-toggle">县区</span>
-            </div>
-        </header>
-        
-        <div class="stats">
-            <p>您已到过地市: <span id="city-count">0</span>个</p>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="container navbar-container">
+            <a href="index.html" class="navbar-logo">豫·地理</a>
+            <ul class="navbar-menu">
+                <li class="navbar-item"><a href="index.html" class="navbar-link"></a></li>
+            </ul>
         </div>
-        
-        <div id="map-container">
-            <div id="map-chart"></div>
-        </div>
-        
-        <div class="location-list" id="location-list">
-            <!-- 地市或区县列表将动态生成 -->
-        </div>
-        
-        <div class="action-buttons">
-            <button id="export-btn">导出足迹图片</button>
-            <button id="share-btn">分享足迹</button>
-        </div>
-    </div>
+    </nav>
 
-    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-    <script src="script.js"></script>
+    <!-- 页面头部 -->
+    <header class="page-header">
+        <div class="container">
+            <h1 class="page-title">地理视角探索发现河南</h1>
+            <p class="page-subtitle"></p>
+        </div>
+    </header>
+
+    <!-- 主体内容 -->
+    <main class="main-content">
+        <div class="container">
+            <div class="grid-container">
+                <!-- 足迹地图 -->
+                <div class="grid-item">
+                    <a href="footprint/index.html" class="grid-item-link">
+                        <img src="images/footprint.jpg" alt="足迹地图" class="grid-item-image" loading="eager">
+                        <div class="grid-item-content">
+                            <h3 class="grid-item-title">足迹地图-河南</h3>
+                            <p class="grid-item-description">记录您在河南的探索足迹，行走河南，读懂中国</p>
+                        </div>
+                    </a>
+                </div>
+                                <!-- 每日挑战 -->
+                 <div class="grid-item">
+                     <a href="challenge/outline.html" class="grid-item-link">
+                        <img src="images/outline-city.jpg" alt="轮廓识城" class="grid-item-image" loading="eager">
+                          <div class="grid-item-content">
+                               <h3 class="grid-item-title">挑战-轮廓识城</h3>
+                               <p class="grid-item-description">挑战您对河南各市、县的行政区划轮廓的熟悉程度</p>
+                        </div>
+                      </a>
+                 </div>
+                <div class="grid-item">
+                    <a href="footprint/china.html" class="grid-item-link">
+                        <img src="images/footprint-china.jpg" alt="足迹地图" class="grid-item-image" loading="eager">
+                        <div class="grid-item-content">
+                            <h3 class="grid-item-title">足迹地图-中国</h3>
+                            <p class="grid-item-description">记录您探索的中国，走遍大地神州，感受大美中国</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="grid-item">
+                    <a href="footprint/china.html" class="grid-item-link">
+                        <img src="images/texture-city.jpg" alt="更多" class="grid-item-image" loading="eager">
+                        <div class="grid-item-content">
+                            <h3 class="grid-item-title">更多-敬请期待</h3>
+                            <p class="grid-item-description">影像猜城、图片猜城、肌理猜城……</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2025 河南地理 | 豫ICP备2025121906号</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
 </body>
-</html>
+</html> 
