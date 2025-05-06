@@ -1,1 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>从地图中发现河南 - 河南地理知识挑战</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/maps.css">
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
+	<script src="../js/gtag.js"></script>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="container navbar-container">
+            <a href="../index.html" class="navbar-logo"></a>
+            <ul class="navbar-menu">
+                <li class="navbar-item"><a href="../index.html" class="navbar-link">首页</a></li>
+                <li class="navbar-item"><a href="../footprint/index.html" class="navbar-link">足迹地图</a></li>
+                <li class="navbar-item"><a href="../challenge/index.html" class="navbar-link">每日挑战</a></li>
+                <li class="navbar-item"><a href="../quiz/index.html" class="navbar-link">地理测验</a></li>
+                <li class="navbar-item"><a href="../maps/index.html" class="navbar-link">河南地图</a></li>
+            </ul>
+        </div>
+    </nav>
 
+    <!-- 页面头部 -->
+    <header class="page-header">
+        <div class="container">
+            <h1 class="page-title">从地图中发现河南</h1>
+            <p class="page-subtitle">多角度了解河南的地理环境与发展历程</p>
+        </div>
+    </header>
+
+    <!-- 主体内容 -->
+    <main class="main-content">
+        <div class="container">
+            <!-- 地图类型选择 -->
+            <div class="map-types">
+                <div class="map-type active" data-type="administrative">
+                    <div class="map-type-icon">
+                        <img src="../images/administrative-icon.png" alt="行政区划图标">
+                    </div>
+                    <h3 class="map-type-title">政区地图</h3>
+                </div>
+                <div class="map-type" data-type="historical">
+                    <div class="map-type-icon">
+                        <img src="../images/historical-icon.png" alt="历史地图图标">
+                    </div>
+                    <h3 class="map-type-title">历史地图</h3>
+                </div>
+                <div class="map-type" data-type="cultural">
+                    <div class="map-type-icon">
+                        <img src="../images/cultural-icon.png" alt="人文地图图标">
+                    </div>
+                    <h3 class="map-type-title">人文地图</h3>
+                </div>
+                <div class="map-type" data-type="natural">
+                    <div class="map-type-icon">
+                        <img src="../images/natural-icon.png" alt="自然地图图标">
+                    </div>
+                    <h3 class="map-type-title">自然地图</h3>
+                </div>
+                <div class="map-type" data-type="planning">
+                    <div class="map-type-icon">
+                        <img src="../images/planning-icon.png" alt="规划地图图标">
+                    </div>
+                    <h3 class="map-type-title">规划地图</h3>
+                </div>
+            </div>
+            
+            <!-- 地图显示区域 -->
+            <div class="map-container">
+                <div class="map-view" id="map-view">
+                    <!-- 地图将在这里显示 -->
+                    <img src="../images/henan-administrative.jpg" alt="河南政区地图" class="map-image" id="map-image">
+                </div>
+                <div class="map-controls">
+                    <button class="map-control-btn zoom-in">放大</button>
+                    <button class="map-control-btn zoom-out">缩小</button>
+                    <button class="map-control-btn fullscreen">全屏</button>
+                    <button class="map-control-btn download">下载</button>
+                </div>
+            </div>
+            
+            <!-- 地图信息区域 -->
+            <div class="map-info">
+                <div class="map-tabs">
+                    <button class="map-tab active" data-tab="overview">概述</button>
+                    <button class="map-tab" data-tab="details">详情</button>
+                    <button class="map-tab" data-tab="legend">图例</button>
+                </div>
+                <div class="map-tab-content" id="overview-content">
+                    <h3 class="info-title">河南省政区地图概述</h3>
+                    <p class="info-text">
+                        河南省位于中国中部，黄河中下游，总面积约16.7万平方公里。全省共辖17个省辖市，1个省直管县级市，共有158个县（市、区）。
+                        河南省地处中华腹地，是中华民族与华夏文明的重要发祥地。
+                    </p>
+                    <div class="info-stats">
+                        <div class="info-stat-item">
+                            <div class="stat-value">16.7万</div>
+                            <div class="stat-label">面积（平方公里）</div>
+                        </div>
+                        <div class="info-stat-item">
+                            <div class="stat-value">9,605万</div>
+                            <div class="stat-label">人口（2020年）</div>
+                        </div>
+                        <div class="info-stat-item">
+                            <div class="stat-value">17+1</div>
+                            <div class="stat-label">地级市数量</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 相关地图推荐 -->
+            <div class="related-maps">
+                <h2 class="section-title">相关地图推荐</h2>
+                <div class="related-map-list">
+                    <div class="related-map-item">
+                        <a href="#" class="related-map-link">
+                            <img src="../images/henan-topographic.jpg" alt="河南地形图" class="related-map-image">
+                            <div class="related-map-title">河南地形图</div>
+                        </a>
+                    </div>
+                    <div class="related-map-item">
+                        <a href="#" class="related-map-link">
+                            <img src="../images/henan-economic.jpg" alt="河南经济地图" class="related-map-image">
+                            <div class="related-map-title">河南经济地图</div>
+                        </a>
+                    </div>
+                    <div class="related-map-item">
+                        <a href="#" class="related-map-link">
+                            <img src="../images/henan-tourism.jpg" alt="河南旅游地图" class="related-map-image">
+                            <div class="related-map-title">河南旅游地图</div>
+                        </a>
+                    </div>
+                    <div class="related-map-item">
+                        <a href="#" class="related-map-link">
+                            <img src="../images/henan-transportation.jpg" alt="河南交通地图" class="related-map-image">
+                            <div class="related-map-title">河南交通地图</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+            <div class="footer-bottom">
+                <p>&copy; 2025 河南地理网站 | 豫ICP备2025121906号</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/maps.js"></script>
+</body>
+</html> 
