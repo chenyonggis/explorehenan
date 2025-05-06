@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中国足迹地图|走遍大地神州，感受大美中国</title>
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/footprint.css">
+    <!-- 引入Font Awesome图标库 -->
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/6.4.2/css/all.min.css">
+    <!-- 引入ECharts -->
+    <script src="https://cdn.staticfile.org/echarts/5.4.3/echarts.min.js"></script>
+    <script src="../js/gtag.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container navbar-container">
+            <a href="../index.html" class="navbar-logo"></a>
+            <ul class="navbar-menu">
+                <li class="navbar-item"><a href="../index.html" class="navbar-link">首页</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 页面头部 -->
+    <header class="page-header compact">
+        <div class="container header-container">
+            <h1 class="page-title">中国足迹地图</h1>
+            <div class="tabs">
+                <a href="china.html" class="tab active" data-region="china">中国</a>
+                <a href="index.html" class="tab" data-region="henan">河南</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主体内容 -->
+    <main class="main-content">
+        <div class="container">
+            <!-- 访问统计信息 -->
+            <div class="visit-stats">
+                <p>您已到过 <span class="highlight" id="visited-count">0</span> <span id="region-unit">省</span>，
+                探索了 <span class="highlight" id="explore-percent">0%</span> 的中国</p>
+            </div>
+            
+            <!-- 地图显示区域 -->
+            <div class="map-container">
+                <!-- 省份/地市切换控件 -->
+                <div class="map-type-switch">
+                    <a href="#" class="type-btn active" data-type="province">省份</a>
+                    <a href="#" class="type-btn" data-type="city">地市</a>
+                </div>
+                <div id="map-chart" class="map-chart"></div>
+            </div>
+            
+            <!-- 地区按钮列表 -->
+            <div class="city-buttons" id="province-list"></div>
+            <div class="city-buttons" id="city-list" style="display: none;"></div>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2025 河南地理 | 豫ICP备2025121906号</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 引入JavaScript文件 -->
+    <script src="../js/main.js"></script>
+    <script src="../js/china-footprint.js"></script>
+</body>
+</html> 

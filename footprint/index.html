@@ -1,1 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>河南足迹地图|行走河南，读懂中国</title>
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/footprint.css">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/6.4.2/css/all.min.css">
+    <!-- 引入ECharts -->
+    <script src="https://cdn.staticfile.org/echarts/5.4.3/echarts.min.js"></script>
+    <script src="../js/gtag.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container navbar-container">
+            <a href="../index.html" class="navbar-logo"></a>
+            <ul class="navbar-menu">
+                <li class="navbar-item"><a href="../index.html" class="navbar-link">首页</a></li>
+            </ul>
+        </div>
+    </nav>
 
+    <!-- 页面头部 -->
+    <header class="page-header compact">
+        <div class="container header-container">
+            <h1 class="page-title">河南足迹地图</h1>
+            <div class="tabs">
+                <a href="china.html" class="tab" data-region="china">中国</a>
+                <a href="index.html" class="tab active" data-region="henan">河南</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主体内容 -->
+    <main class="main-content">
+        <div class="container">
+            <!-- 访问统计信息 -->
+            <div class="visit-stats">
+                <p>您已到1过 <span class="highlight" id="visited-count">TEST</span> <span id="region-unit">地</span>，
+                探索了 <span class="highlight" id="explore-percent">0%</span> 的河南</p>
+            </div>
+            
+            <!-- 地图显示区域 -->
+            <div class="map-container">
+                <!-- 地市/区县切换控件 -->
+                <div class="region-type-switch">
+                    <a href="#" class="type-btn active" data-type="city">地市</a>
+                    <a href="#" class="type-btn" data-type="county">县区</a>
+                </div>
+
+                <!-- 地图风格切换 -->
+                <div id="map-style-switch" class="map-style-switch">
+                    <div class="color-block active" data-style="natural" title="清新" style="background-color: rgb(191,242,188)"></div>
+                    <div class="color-block" data-style="tech" title="科技" style="background-color: rgb(127,215,247)"></div>
+                    <div class="color-block" data-style="warm" title="温暖" style="background-color: rgb(249,198,213)"></div>
+                </div>
+
+                <!-- 地图工具栏 -->
+                <div class="map-tools">
+                    <button class="tool-btn fullscreen-btn" title="全屏显示">
+                        <i class="fa fa-expand"></i>
+                    </button>
+                    <button class="tool-btn share-btn" title="分享">
+                        <i class="fa fa-share-alt"></i>
+                    </button>
+                    <button class="tool-btn export-img-btn" title="导出图片">
+                        <i class="fa fa-download"></i>
+                    </button>
+                </div>
+                
+                <div id="map-chart" class="map-chart"></div>
+            </div>
+            
+            <!-- 地区按钮列表 -->
+            <div class="city-buttons" id="city-list"></div>
+            <div class="city-buttons" id="county-list" style="display: none;"></div>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2025 河南地理 | 豫ICP备2025121906号</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 引入JavaScript文件 -->
+    <script src="../js/main.js"></script>
+    <script src="../js/footprint.js"></script>
+</body>
+</html> 
