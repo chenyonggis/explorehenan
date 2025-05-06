@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>河南地理挑战-轮廓识城</title>
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/challenge.css">
+    <link rel="stylesheet" href="../css/outline.css">
+	<script src="../js/gtag.js"></script>
+    <script src="https://cdn.staticfile.org/echarts/5.4.3/echarts.min.js"></script>
+    <style>
+        /* 移动端导航栏优化 */
+        @media (max-width: 768px) {
+            .navbar {
+                height: 40px;
+            }
+            
+            .navbar-container {
+                padding: 0 10px;
+                height: 100%;
+                position: relative;
+            }
+            
+            .navbar-menu {
+                margin: 0;
+                padding: 0;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                position: absolute;
+                right: 10px;
+            }
+            
+            .navbar-item {
+                margin: 0;
+                height: 100%;
+                display: flex;
+                align-items: center;
+            }
+            
+            .navbar-link {
+                padding: 0 10px;
+                height: 100%;
+                display: flex;
+                align-items: center;
+            }
+            
+            .navbar-logo {
+                font-size: 1.2rem;
+                height: 100%;
+                display: flex;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container navbar-container">
+            <a href="../index.html" class="navbar-logo"></a>
+            <ul class="navbar-menu">
+                <li class="navbar-item"><a href="../index.html" class="navbar-link">首页</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="content-wrapper">
+        <div id="error-message"></div>
+        
+        <div class="game-header">
+            <h1 class="game-title">河南-轮廓识城</h1>
+            <div class="mode-switch">
+                <button class="mode-btn active" data-mode="city">地市模式</button>
+                <button class="mode-btn" data-mode="county">区县模式</button>
+            </div>
+        </div>
+
+        <div id="map-container"></div>
+        <div id="loading">加载中...</div>
+
+        <div class="input-section">
+            <div class="feedback">
+                <p id="feedback-text">请猜猜图中轮廓是那个城市...</p>
+                <p id="distance-hint"></p>
+            </div>
+            <div class="input-wrapper">
+                <div class="input-group">
+                    <input type="text" id="city-input" placeholder="请输入城市名称..." autocomplete="off">
+                    <div class="suggestions" id="suggestions"></div>
+                </div>
+                <div class="action-buttons">
+                    <button class="action-btn submit-btn">提交</button>
+                    <button class="action-btn hint-btn">提示</button>
+                    <button class="action-btn skip-btn">跳过</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats">
+            <div class="stat-item">得分：<span id="score">0</span></div>
+            <div class="stat-item">已完成：<span id="completed">0/34</span></div>
+            <div class="stat-item">剩余跳过：<span id="skips-left">3</span></div>
+        </div>
+        
+        <div class="completion-section">
+            <h2 class="rules-title">恭喜完成挑战！</h2>
+            <div class="share-section">
+                <div class="share-text">分享你的成绩：</div>
+                <div id="share-content"></div>
+                <button class="copy-btn">复制分享文本</button>
+            </div>
+            <button class="retry-btn">重新挑战</button>
+        </div>
+
+        <div class="results">
+            <h3>已猜对的城市</h3>
+            <div class="result-grid" id="correct-cities"></div>
+            
+            <h3>已跳过的城市</h3>
+            <div class="result-grid" id="skipped-cities"></div>
+        </div>
+
+        <div class="rules-section">
+            <h2 class="rules-title">轮廓识城-规则说明</h2>
+            <p>《河南地理挑战-轮廓识城》是根据系统随机给出的地市/区县的行政区划轮廓，猜对应行政区划名称的游戏，可以帮助大家以有趣的方式学习河南地理知识。无论是学生、教师还是地理爱好者，都可以在游戏中获得乐趣和知识。</p>
+            <ol>
+                <li>游戏会显示一个河南省城市（含地市/区县）的轮廓。</li>
+                <li>根据轮廓猜测这是哪个地市/区县。</li>
+                <li>如果猜错了，会显示你猜测的地区与目标地区的距离。可以继续猜测，直到猜对为止。</li>
+                <li>如果猜不出来，可以点击提示按钮，会显示该区域在河南省的位置，辅助猜猜。</li>
+                <li>猜对后可以进入下一轮，已经猜对的地区不会重复出现。 每猜对一个地区可以获得10分。</li>
+                <li>每轮游戏可以跳过三次，跳过的地区不会再出现。</li>
+            </ol>
+        </div>
+
+        <div class="challenge-link">
+            <span>挑战全国的：<a href="https://guessthearea.lol/" target="_blank">全国地图轮廓猜猜</a></span>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-bottom">
+                <p>&copy; 2025 河南地理 | 豫ICP备2025121906号</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/outline.js"></script>
+</body>
+</html> 
