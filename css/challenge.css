@@ -1,0 +1,236 @@
+/* 每日挑战页面特定样式 */
+
+/* 挑战类型列表样式 */
+.challenge-types {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+.challenge-item {
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.challenge-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+}
+
+.challenge-link {
+    display: flex;
+    text-decoration: none;
+    color: inherit;
+    padding: 20px;
+}
+
+.challenge-icon {
+    flex: 0 0 80px;
+    height: 80px;
+    margin-right: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+}
+
+.challenge-icon img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+}
+
+.challenge-info {
+    flex: 1;
+}
+
+.challenge-title {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    color: #e74c3c;
+}
+
+.challenge-description {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+}
+
+.challenge-difficulty {
+    display: flex;
+    align-items: center;
+}
+
+.difficulty-label {
+    color: #888;
+    font-size: 0.85rem;
+    margin-right: 5px;
+}
+
+.difficulty-stars {
+    color: #f39c12;
+    letter-spacing: 2px;
+}
+
+/* 挑战进度样式 */
+.challenge-progress {
+    background-color: white;
+    border-radius: 10px;
+    padding: 25px;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.section-title {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.progress-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.progress-item {
+    margin-bottom: 5px;
+}
+
+.progress-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.progress-label {
+    font-weight: 500;
+    color: #555;
+}
+
+.progress-value {
+    color: #e74c3c;
+    font-weight: 500;
+}
+
+.progress-bar {
+    height: 8px;
+    background-color: #f1f1f1;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: #e74c3c;
+    border-radius: 4px;
+    transition: width 0.5s ease;
+}
+
+/* 排行榜样式 */
+.challenge-leaderboard {
+    background-color: white;
+    border-radius: 10px;
+    padding: 25px;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.leaderboard-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.tab-btn {
+    padding: 8px 15px;
+    background-color: #f1f1f1;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.tab-btn:hover {
+    background-color: #e0e0e0;
+}
+
+.tab-btn.active {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.leaderboard-content {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.leaderboard-list {
+    width: 100%;
+}
+
+.leaderboard-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    border-bottom: 1px solid #f1f1f1;
+}
+
+.leaderboard-item:last-child {
+    border-bottom: none;
+}
+
+.leaderboard-rank {
+    flex: 0 0 40px;
+    font-weight: bold;
+}
+
+.leaderboard-rank:nth-child(1) {
+    color: gold;
+}
+
+.leaderboard-rank:nth-child(2) {
+    color: silver;
+}
+
+.leaderboard-rank:nth-child(3) {
+    color: #cd7f32; /* Bronze */
+}
+
+.leaderboard-name {
+    flex: 1;
+}
+
+.leaderboard-score {
+    flex: 0 0 80px;
+    text-align: right;
+    color: #e74c3c;
+    font-weight: 500;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .challenge-types {
+        grid-template-columns: 1fr;
+    }
+    
+    .leaderboard-tabs {
+        flex-wrap: wrap;
+    }
+    
+    .tab-btn {
+        flex: 1;
+        min-width: 80px;
+        text-align: center;
+        font-size: 0.9rem;
+    }
+} 

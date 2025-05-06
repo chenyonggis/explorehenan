@@ -1,0 +1,168 @@
+/* 地理测验页面特定样式 */
+
+/* 测验类别样式 */
+.quiz-categories {
+    margin-bottom: 40px;
+}
+
+.quiz-category {
+    margin-bottom: 30px;
+}
+
+.category-title {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e74c3c;
+}
+
+.quiz-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px;
+}
+
+.quiz-item {
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.quiz-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+}
+
+.quiz-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+.quiz-image {
+    height: 160px;
+    overflow: hidden;
+}
+
+.quiz-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.quiz-item:hover .quiz-image img {
+    transform: scale(1.05);
+}
+
+.quiz-content {
+    padding: 20px;
+}
+
+.quiz-title {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    color: #e74c3c;
+}
+
+.quiz-description {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.quiz-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: #888;
+}
+
+.quiz-questions, .quiz-time, .quiz-difficulty {
+    padding: 3px 8px;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+}
+
+/* 测验统计信息样式 */
+.quiz-stats {
+    display: flex;
+    justify-content: space-around;
+    margin: 40px 0;
+    padding: 30px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.stats-item {
+    display: flex;
+    align-items: center;
+}
+
+.stats-icon {
+    width: 60px;
+    height: 60px;
+    background-color: #f8f8f8;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+}
+
+/* 统计图标 */
+.stats-icon-quiz, .stats-icon-question, .stats-icon-user {
+    width: 30px;
+    height: 30px;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.stats-icon-quiz {
+    background-image: url('../images/quiz-icon.png');
+}
+
+.stats-icon-question {
+    background-image: url('../images/question-icon.png');
+}
+
+.stats-icon-user {
+    background-image: url('../images/user-icon.png');
+}
+
+.stats-content {
+    text-align: left;
+}
+
+.stats-number {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #e74c3c;
+}
+
+.stats-label {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .quiz-list {
+        grid-template-columns: 1fr;
+    }
+    
+    .quiz-stats {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .stats-item {
+        width: 100%;
+    }
+} 

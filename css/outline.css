@@ -1,0 +1,510 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    max-width: none;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f5f5f5;
+}
+
+/* 导航栏样式 */
+.navbar {
+    background: #4CAF50;
+    padding: 1px 2px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.navbar-menu {
+    display: flex;
+    list-style: none;
+    margin-right: 20px;
+    text-align: center;
+}
+
+/* 页脚样式 */
+.footer {
+    background: #333;
+    padding: 20px 0;
+    margin-top: 0px;
+    width: 100%;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer-bottom {
+    color: #ffffff;
+}
+
+/* 内容区域样式 */
+.content-wrapper {
+    max-width: 1080px;
+    margin: 0 auto;
+}
+
+/* 游戏标题和模式切换容器 */
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.game-title {
+    color: #3c354b;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.mode-switch {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.mode-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.mode-btn.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.mode-btn:not(.active) {
+    background-color: #fff;
+    color: #333;
+}
+
+#map-container {
+    width: 100%;
+    height: 400px;
+    position: relative;
+    background: #fff;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+#map-container > div {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    background: #fff;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.stat-item {
+    background: #fff;
+    padding: 5px;
+    border-radius: 4px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* 移动端样式优化 */
+@media (max-width: 768px) {
+    .stats {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 5px;
+    }
+
+    .stat-item {
+        padding: 8px 5px;
+        font-size: 14px;
+    }
+    
+    .stat-item span {
+        font-size: 14px;
+    }
+}
+
+.input-section {
+    margin-bottom: 10px;
+}
+
+.input-wrapper {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.input-group {
+    flex: 1;
+    position: relative;
+}
+
+#city-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+    display: none;
+}
+
+.suggestion-item {
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.suggestion-item:hover {
+    background-color: #f5f5f5;
+}
+
+.hint-btn {
+    background-color: #2196F3;
+    color: white;
+}
+
+.action-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.submit-btn {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.skip-btn {
+    background-color: #ff4444;
+    color: white;
+}
+
+.feedback {
+    margin-bottom: 5px;
+    padding: 5px;
+    border-radius: 4px;
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.results {
+    margin-bottom: 10px;
+}
+
+.result-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.result-item {
+    background: #fff;
+    padding: 8px;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 14px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.correct {
+    background-color: #e8f5e9;
+    border: 1px solid #4CAF50;
+}
+
+.skipped {
+    background-color: #ffebee;
+    border: 1px solid #ff4444;
+}
+
+.rules {
+    background: #fff;
+    padding: 20px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.rules h3 {
+    margin-bottom: 10px;
+}
+
+.rules ol {
+    padding-left: 20px;
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 10px;
+    }
+
+    #map-container {
+        height: 300px;
+    }
+
+    .input-section {
+        flex-direction: column;
+    }
+
+    .action-btn {
+        width: 100%;
+    }
+}
+
+#loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #666;
+    display: none;
+}
+
+#error-message {
+    color: #ff4444;
+    padding: 10px;
+    text-align: center;
+    background: #ffebee;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    display: none;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    display: none;
+    z-index: 9998;
+    backdrop-filter: blur(2px);
+}
+
+/* 完成区域样式 */
+.completion-section {
+    display: none;
+    text-align: center;
+    margin: 20px 0;
+    padding: 20px;
+    background: rgb(215, 215, 216, 0.2);
+    border-radius: 12px;
+}
+
+.completion-section.show {
+    display: block;
+}
+
+.share-section {
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 15px auto;
+    max-width: 600px;
+}
+
+.share-text {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+#share-content {
+    background: rgb(215, 215, 216, 0.2);
+    padding: 15px;
+    border-radius: 4px;
+    margin: 10px 0;
+    word-break: break-all;
+}
+
+.copy-btn {
+    display: inline-block;
+    padding: 8px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.copy-btn:hover {
+    background-color: #45a049;
+}
+
+.retry-btn {
+    display: block;
+    padding: 10px 30px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 15px auto;
+    transition: background-color 0.3s;
+    width: fit-content;
+}
+
+.retry-btn:hover {
+    background-color: #45a049;
+}
+
+.rules-title {
+    color: #4c00ff;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+/* 规则说明样式 */
+.rules-section {
+    background: rgb(215, 215, 216,0.2);
+    padding: 10px;
+    border-radius: 12px;
+    max-width: 100%;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.rules-title {
+    color: #3c354b;
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.rules-section p {
+    color: #333;
+    line-height: 1.8;
+    margin-bottom: 20px;
+    text-indent: 2em;
+    font-size: 16px;
+}
+
+.rules-section ol {
+    padding-left: 2em;
+    margin: 20px 0;
+}
+
+.rules-section li {
+    color: #333;
+    margin-bottom: 15px;
+    line-height: 1.6;
+    font-size: 16px;
+}
+
+/* 挑战链接样式 */
+.challenge-link {
+    display: grid;
+    place-items: center;
+    padding: 15px;
+    font-size: 14px;
+}
+
+.challenge-link a {
+    color: #162676;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.challenge-link a:hover {
+    color: #080cf0;
+}
+
+/* 完成提示样式 */
+.completion-message {
+    text-align: center;
+    margin: 20px 0;
+    padding: 20px;
+    background: rgb(215, 215, 216, 0.2);
+    border-radius: 12px;
+}
+
+.completion-title {
+    font-size: 24px;
+    color: #3c354b;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.completion-share {
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 15px auto;
+    color: #333;
+    max-width: 600px;
+    word-break: break-all;
+}
+
+.retry-button {
+    display: inline-block;
+    padding: 10px 30px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.retry-button:hover {
+    background-color: #45a049;
+}
+
+/* 隐藏输入区域 */
+.input-section.hidden {
+    display: none;
+} 
