@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高德地图坐标获取转换工具</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .container {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: row;
+        }
+        .control-panel {
+            width: 400px;
+            padding: 20px;
+            background-color: #f5f5f5;
+            border-right: 1px solid #ddd;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .control-row {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+        .search-box {
+            width: 100%;
+            display: flex;
+            gap: 10px;
+        }
+        .search-input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .search-btn {
+            padding: 8px 15px;
+            background-color: #1890ff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            white-space: nowrap;
+            font-size: 14px;
+        }
+        .search-btn:hover {
+            background-color: #40a9ff;
+        }
+        .coordinate-box {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+        }
+        .coordinate-group {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        .coordinate-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 5px;
+        }
+        .coordinate-input {
+            width: 220px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #fff;
+            font-size: 14px;
+        }
+        .coordinate-label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 12px;
+            color: #666;
+        }
+        .coordinate-detail {
+            display: flex;
+            gap: 5px;
+            margin-top: 0;
+            align-items: center;
+        }
+        .coordinate-detail input {
+            flex: 1;
+            padding: 4px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #fff;
+            font-size: 12px;
+        }
+        .copy-btn {
+            padding: 4px 8px;
+            background-color: #52c41a;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            white-space: nowrap;
+        }
+        .copy-btn:hover {
+            background-color: #73d13d;
+        }
+        .convert-btn {
+            padding: 4px 8px;
+            background-color: #1890ff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            white-space: nowrap;
+            margin-left: 5px;
+        }
+        .convert-btn:hover {
+            background-color: #40a9ff;
+        }
+        .district-info {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            width: 100%;
+        }
+        .district-group {
+            flex: 1;
+        }
+        .district-input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #fff;
+            font-size: 14px;
+        }
+        .copy-btn {
+            padding: 4px 8px;
+            background-color: #52c41a;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            white-space: nowrap;
+            margin-left: 5px;
+        }
+        .copy-btn:hover {
+            background-color: #73d13d;
+        }
+        #map-container {
+            flex: 1;
+            width: calc(100% - 400px);
+            height: 100vh;
+        }
+        .coordinate-locate {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+        .coordinate-locate input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .locate-btn {
+            padding: 8px 15px;
+            background-color: #52c41a;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            white-space: nowrap;
+            font-size: 14px;
+        }
+        .locate-btn:hover {
+            background-color: #73d13d;
+        }
+        .poi-info {
+            margin-top: 10px;
+            width: 100%;
+        }
+        .poi-list {
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #fff;
+        }
+        .poi-item {
+            padding: 8px;
+            border-bottom: 1px solid #eee;
+            font-size: 14px;
+        }
+        .poi-item:last-child {
+            border-bottom: none;
+        }
+        .poi-name {
+            font-weight: bold;
+            color: #333;
+        }
+        .poi-address {
+            color: #666;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+        .poi-district {
+            color: #1890ff;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+        .poi-adcode {
+            color: #52c41a;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        /* 移动端适配 */
+        @media screen and (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            .control-panel {
+                width: 100%;
+                height: auto;
+                max-height: 50vh;
+                border-right: none;
+                border-bottom: 1px solid #ddd;
+                padding: 10px;
+            }
+            #map-container {
+                width: 100%;
+                height: 50vh;
+            }
+            .control-row {
+                gap: 5px;
+            }
+            .search-box {
+                margin-bottom: 10px;
+            }
+            .district-info {
+                margin-top: 10px;
+            }
+            .coordinate-box {
+                gap: 5px;
+            }
+            .coordinate-input, .district-input {
+                font-size: 16px;
+            }
+            .search-btn {
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="control-panel">
+            <div class="control-row">
+                <div class="search-box">
+                    <input type="text" id="search-input" class="search-input" placeholder="请输入地址">
+                    <button id="search-btn" class="search-btn">搜索</button>
+                </div>
+                <div class="district-info">
+                    <div class="district-group">
+                        <label class="coordinate-label">行政区划代码</label>
+                        <input type="text" id="district-code" class="district-input" readonly>
+                    </div>
+                    <div class="district-group">
+                        <label class="coordinate-label">行政区划名称</label>
+                        <input type="text" id="district-name" class="district-input" readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="coordinate-box">
+                <div class="coordinate-group">
+                    <label class="coordinate-label">GCJ02坐标（火星坐标系、高德地图、腾讯地图坐标系）</label>
+                    <div class="coordinate-row">
+                        <input type="text" id="gcj02-coord" class="coordinate-input" placeholder="经度,纬度">
+                        <button class="copy-btn" data-copy="gcj02-coord">复制</button>
+                    </div>
+                    <div class="coordinate-detail">
+                        <input type="text" id="gcj02-x" placeholder="X">
+                        <input type="text" id="gcj02-y" placeholder="Y">
+                        <button class="convert-btn" data-from="gcj02">转换</button>
+                    </div>
+                </div>
+                <div class="coordinate-group">
+                    <label class="coordinate-label">WGS84坐标（谷歌地球坐标系）</label>
+                    <div class="coordinate-row">
+                        <input type="text" id="wgs84-coord" class="coordinate-input" placeholder="经度,纬度">
+                        <button class="copy-btn" data-copy="wgs84-coord">复制</button>
+                    </div>
+                    <div class="coordinate-detail">
+                        <input type="text" id="wgs84-x" placeholder="X">
+                        <input type="text" id="wgs84-y" placeholder="Y">
+                        <button class="convert-btn" data-from="wgs84">转换</button>
+                    </div>
+                </div>
+                <div class="coordinate-group">
+                    <label class="coordinate-label">BD09坐标（百度地图坐标系）</label>
+                    <div class="coordinate-row">
+                        <input type="text" id="bd09-coord" class="coordinate-input" placeholder="经度,纬度">
+                        <button class="copy-btn" data-copy="bd09-coord">复制</button>
+                    </div>
+                    <div class="coordinate-detail">
+                        <input type="text" id="bd09-x" placeholder="X">
+                        <input type="text" id="bd09-y" placeholder="Y">
+                        <button class="convert-btn" data-from="bd09">转换</button>
+                    </div>
+                </div>
+            </div>
+            <div class="coordinate-locate">
+                <input type="text" id="locate-input" class="coordinate-input" placeholder="请输入坐标（格式：经度,纬度）">
+                <button id="locate-btn" class="locate-btn">定位</button>
+            </div>
+            <div class="poi-info">
+                <label class="coordinate-label">周边POI信息</label>
+                <div id="poi-list" class="poi-list"></div>
+            </div>
+        </div>
+        <div id="map-container"></div>
+    </div>
+
+    <!-- 更新高德地图API加载方式 -->
+    <script type="text/javascript">
+        window._AMapSecurityConfig = {
+            securityJsCode: 'e56d8a2099e9b513a9ba0b32bce234c4',
+        }
+    </script>
+    <script type="text/javascript" src="https://webapi.amap.com/maps?v=2.0&key=520944f6ac2c35060a8248f7822c24b6"></script>
+    <script>
+        // 等待API加载完成
+        window.onload = function() {
+            if (typeof AMap === 'undefined') {
+                alert('高德地图API加载失败，请检查网络连接和密钥配置');
+                return;
+            }
+
+            // 初始化地图 - 设置郑州市中心坐标
+            const map = new AMap.Map('map-container', {
+                zoom: 12,
+                center: [113.625368, 34.746599] // 郑州市中心坐标
+            });
+
+            // 创建标记
+            const marker = new AMap.Marker({
+                map: map,
+                position: [113.625368, 34.746599]
+            });
+
+            // 加载周边搜索插件
+            AMap.plugin(['AMap.PlaceSearch'], function() {
+                console.log('周边搜索插件加载完成');
+            });
+
+            // 搜索周边POI
+            function searchNearbyPOI(lng, lat) {
+                AMap.plugin(['AMap.PlaceSearch'], function() {
+                    const placeSearch = new AMap.PlaceSearch({
+                        pageSize: 10,
+                        pageIndex: 1,
+                        radius: 1000,
+                        extensions: 'all'
+                    });
+
+                    placeSearch.searchNearBy('', [lng, lat], 1000, (status, result) => {
+                        if (status === 'complete' && result.poiList) {
+                            const poiList = document.getElementById('poi-list');
+                            poiList.innerHTML = '';
+
+                            result.poiList.pois.forEach(poi => {
+                                const poiItem = document.createElement('div');
+                                poiItem.className = 'poi-item';
+                                
+                                const nameDiv = document.createElement('div');
+                                nameDiv.className = 'poi-name';
+                                nameDiv.textContent = poi.name;
+                                
+                                const addressDiv = document.createElement('div');
+                                addressDiv.className = 'poi-address';
+                                addressDiv.textContent = poi.address;
+                                
+                                const districtDiv = document.createElement('div');
+                                districtDiv.className = 'poi-district';
+                                districtDiv.textContent = `${poi.adname} ${poi.cityname}`;
+
+                                const adcodeDiv = document.createElement('div');
+                                adcodeDiv.className = 'poi-adcode';
+                                adcodeDiv.textContent = `行政区划代码：${poi.adcode || '未知'}`;
+
+                                poiItem.appendChild(nameDiv);
+                                poiItem.appendChild(addressDiv);
+                                poiItem.appendChild(districtDiv);
+                                poiItem.appendChild(adcodeDiv);
+                                poiList.appendChild(poiItem);
+                            });
+                        } else {
+                            document.getElementById('poi-list').innerHTML = '<div class="poi-item">未找到周边POI信息</div>';
+                        }
+                    });
+                });
+            }
+
+            // 坐标转换算法
+            const x_PI = 3.14159265358979324 * 3000.0 / 180.0;
+            const PI = 3.1415926535897932384626;
+            const a = 6378245.0;
+            const ee = 0.00669342162296594323;
+
+            // WGS84 转换为 GCJ02
+            function wgs84togcj02(lng, lat) {
+                if (outOfChina(lng, lat)) {
+                    return [lng, lat];
+                }
+                let dlat = transformlat(lng - 105.0, lat - 35.0);
+                let dlng = transformlng(lng - 105.0, lat - 35.0);
+                const radlat = lat / 180.0 * PI;
+                let magic = Math.sin(radlat);
+                magic = 1 - ee * magic * magic;
+                const sqrtmagic = Math.sqrt(magic);
+                dlat = (dlat * 180.0) / ((a * (1 - ee)) / (magic * sqrtmagic) * PI);
+                dlng = (dlng * 180.0) / (a / sqrtmagic * Math.cos(radlat) * PI);
+                const mglat = lat + dlat;
+                const mglng = lng + dlng;
+                return [mglng, mglat];
+            }
+
+            // BD09 转换为 GCJ02
+            function bd09togcj02(bd_lng, bd_lat) {
+                const x = bd_lng - 0.0065;
+                const y = bd_lat - 0.006;
+                const z = Math.sqrt(x * x + y * y) - 0.00002 * Math.sin(y * x_PI);
+                const theta = Math.atan2(y, x) - 0.000003 * Math.cos(x * x_PI);
+                const gg_lng = z * Math.cos(theta);
+                const gg_lat = z * Math.sin(theta);
+                return [gg_lng, gg_lat];
+            }
+
+            // GCJ02 转换为 WGS84
+            function gcj02towgs84(lng, lat) {
+                if (outOfChina(lng, lat)) {
+                    return [lng, lat];
+                }
+                let dlat = transformlat(lng - 105.0, lat - 35.0);
+                let dlng = transformlng(lng - 105.0, lat - 35.0);
+                const radlat = lat / 180.0 * PI;
+                let magic = Math.sin(radlat);
+                magic = 1 - ee * magic * magic;
+                const sqrtmagic = Math.sqrt(magic);
+                dlat = (dlat * 180.0) / ((a * (1 - ee)) / (magic * sqrtmagic) * PI);
+                dlng = (dlng * 180.0) / (a / sqrtmagic * Math.cos(radlat) * PI);
+                const mglat = lat + dlat;
+                const mglng = lng + dlng;
+                return [lng * 2 - mglng, lat * 2 - mglat];
+            }
+
+            // GCJ02 转换为 BD09
+            function gcj02tobd09(lng, lat) {
+                const z = Math.sqrt(lng * lng + lat * lat) + 0.00002 * Math.sin(lat * x_PI);
+                const theta = Math.atan2(lat, lng) + 0.000003 * Math.cos(lng * x_PI);
+                const bd_lng = z * Math.cos(theta) + 0.0065;
+                const bd_lat = z * Math.sin(theta) + 0.006;
+                return [bd_lng, bd_lat];
+            }
+
+            // 判断是否在中国境外
+            function outOfChina(lng, lat) {
+                return (lng < 72.004 || lng > 137.8347) || ((lat < 0.8293 || lat > 55.8271) || false);
+            }
+
+            // 转换纬度
+            function transformlat(lng, lat) {
+                let ret = -100.0 + 2.0 * lng + 3.0 * lat + 0.2 * lat * lat + 0.1 * lng * lat + 0.2 * Math.sqrt(Math.abs(lng));
+                ret += (20.0 * Math.sin(6.0 * lng * PI) + 20.0 * Math.sin(2.0 * lng * PI)) * 2.0 / 3.0;
+                ret += (20.0 * Math.sin(lat * PI) + 40.0 * Math.sin(lat / 3.0 * PI)) * 2.0 / 3.0;
+                ret += (160.0 * Math.sin(lat / 12.0 * PI) + 320 * Math.sin(lat * PI / 30.0)) * 2.0 / 3.0;
+                return ret;
+            }
+
+            // 转换经度
+            function transformlng(lng, lat) {
+                let ret = 300.0 + lng + 2.0 * lat + 0.1 * lng * lng + 0.1 * lng * lat + 0.1 * Math.sqrt(Math.abs(lng));
+                ret += (20.0 * Math.sin(6.0 * lng * PI) + 20.0 * Math.sin(2.0 * lng * PI)) * 2.0 / 3.0;
+                ret += (20.0 * Math.sin(lng * PI) + 40.0 * Math.sin(lng / 3.0 * PI)) * 2.0 / 3.0;
+                ret += (150.0 * Math.sin(lng / 12.0 * PI) + 300.0 * Math.sin(lng / 30.0 * PI)) * 2.0 / 3.0;
+                return ret;
+            }
+
+            // 格式化坐标数值，保留6位小数，去掉末尾的0
+            function formatCoordinate(num) {
+                return parseFloat(num.toFixed(6)).toString();
+            }
+
+            // 坐标转换函数
+            function transformCoordinate(lng, lat, type) {
+                return new Promise((resolve, reject) => {
+                    try {
+                        lng = parseFloat(lng);
+                        lat = parseFloat(lat);
+
+                        if (isNaN(lng) || isNaN(lat)) {
+                            throw new Error('无效的坐标值');
+                        }
+
+                        let result;
+                        if (type === 'wgs84') {
+                            // WGS84 转 GCJ02
+                            result = wgs84togcj02(lng, lat);
+                        } else if (type === 'bd09') {
+                            // BD09 转 GCJ02
+                            result = bd09togcj02(lng, lat);
+                        } else if (type === 'gcj02_to_wgs84') {
+                            // GCJ02 转 WGS84
+                            result = gcj02towgs84(lng, lat);
+                        } else if (type === 'gcj02_to_bd09') {
+                            // GCJ02 转 BD09
+                            result = gcj02tobd09(lng, lat);
+                        } else {
+                            result = [lng, lat];
+                        }
+
+                        resolve({
+                            lng: result[0],
+                            lat: result[1]
+                        });
+                    } catch (error) {
+                        reject(error);
+                    }
+                });
+            }
+
+            // 获取行政区划信息
+            function getDistrictInfo(lng, lat) {
+                return new Promise((resolve, reject) => {
+                    AMap.plugin('AMap.Geocoder', () => {
+                        const geocoder = new AMap.Geocoder({
+                            radius: 1000,
+                            extensions: 'all'
+                        });
+
+                        geocoder.getAddress([lng, lat], (status, result) => {
+                            if (status === 'complete' && result.regeocode) {
+                                const addressComponent = result.regeocode.addressComponent;
+                                resolve({
+                                    code: addressComponent.adcode,
+                                    name: addressComponent.province + addressComponent.city + addressComponent.district
+                                });
+                            } else {
+                                reject(new Error('获取行政区划信息失败'));
+                            }
+                        });
+                    });
+                });
+            }
+
+            // 坐标定位功能
+            document.getElementById('locate-btn').addEventListener('click', () => {
+                const coordStr = document.getElementById('locate-input').value.trim();
+                if (!coordStr) return;
+
+                // 解析坐标
+                const coords = coordStr.split(',').map(Number);
+                if (coords.length !== 2 || isNaN(coords[0]) || isNaN(coords[1])) {
+                    alert('请输入正确的坐标格式（经度,纬度）');
+                    return;
+                }
+
+                const [lng, lat] = coords;
+
+                // 更新地图中心点和标记位置
+                map.setCenter([lng, lat]);
+                marker.setPosition([lng, lat]);
+
+                // 更新坐标显示
+                updateCoordinates(lng, lat);
+
+                // 搜索周边POI
+                searchNearbyPOI(lng, lat);
+            });
+
+            // 点击地图时也更新POI信息
+            map.on('click', (e) => {
+                const lng = e.lnglat.getLng();
+                const lat = e.lnglat.getLat();
+                
+                // 更新标记位置
+                marker.setPosition([lng, lat]);
+                
+                // 更新坐标显示
+                updateCoordinates(lng, lat);
+
+                // 搜索周边POI
+                searchNearbyPOI(lng, lat);
+            });
+
+            // 更新所有坐标显示
+            async function updateCoordinates(lng, lat) {
+                try {
+                    // 更新GCJ02坐标
+                    document.getElementById('gcj02-coord').value = `${formatCoordinate(lng)}, ${formatCoordinate(lat)}`;
+                    document.getElementById('gcj02-x').value = formatCoordinate(lng);
+                    document.getElementById('gcj02-y').value = formatCoordinate(lat);
+
+                    // 转换到WGS84
+                    const wgs84 = await transformCoordinate(lng, lat, 'gcj02_to_wgs84');
+                    document.getElementById('wgs84-coord').value = 
+                        `${formatCoordinate(wgs84.lng)}, ${formatCoordinate(wgs84.lat)}`;
+                    document.getElementById('wgs84-x').value = formatCoordinate(wgs84.lng);
+                    document.getElementById('wgs84-y').value = formatCoordinate(wgs84.lat);
+
+                    // 转换到BD09
+                    const bd09 = await transformCoordinate(lng, lat, 'gcj02_to_bd09');
+                    document.getElementById('bd09-coord').value = 
+                        `${formatCoordinate(bd09.lng)}, ${formatCoordinate(bd09.lat)}`;
+                    document.getElementById('bd09-x').value = formatCoordinate(bd09.lng);
+                    document.getElementById('bd09-y').value = formatCoordinate(bd09.lat);
+
+                    // 获取并更新行政区划信息
+                    const districtInfo = await getDistrictInfo(lng, lat);
+                    document.getElementById('district-code').value = districtInfo.code;
+                    document.getElementById('district-name').value = districtInfo.name;
+                } catch (error) {
+                    console.error('更新信息错误:', error);
+                    document.getElementById('wgs84-coord').value = '转换失败';
+                    document.getElementById('bd09-coord').value = '转换失败';
+                    document.getElementById('wgs84-x').value = '';
+                    document.getElementById('wgs84-y').value = '';
+                    document.getElementById('bd09-x').value = '';
+                    document.getElementById('bd09-y').value = '';
+                    document.getElementById('district-code').value = '获取失败';
+                    document.getElementById('district-name').value = '获取失败';
+                }
+            }
+
+            // 搜索功能
+            document.getElementById('search-btn').addEventListener('click', () => {
+                const keyword = document.getElementById('search-input').value;
+                if (!keyword) return;
+
+                AMap.plugin('AMap.PlaceSearch', () => {
+                    const placeSearch = new AMap.PlaceSearch({
+                        pageSize: 1,
+                        pageIndex: 1,
+                        city: '郑州市' // 限制搜索范围在郑州市
+                    });
+
+                    placeSearch.search(keyword, (status, result) => {
+                        if (status === 'complete' && result.poiList.pois.length > 0) {
+                            const poi = result.poiList.pois[0];
+                            const location = poi.location;
+                            
+                            // 更新地图中心点和标记位置
+                            map.setCenter(location);
+                            marker.setPosition(location);
+                            
+                            // 更新坐标显示
+                            updateCoordinates(location.lng, location.lat);
+                        }
+                    });
+                });
+            });
+
+            // 添加坐标输入框事件监听
+            document.querySelectorAll('.coordinate-input').forEach(input => {
+                input.addEventListener('input', function() {
+                    const value = this.value.trim();
+                    if (value) {
+                        const coords = value.split(',').map(Number);
+                        if (coords.length === 2 && !isNaN(coords[0]) && !isNaN(coords[1])) {
+                            const type = this.id.split('-')[0];
+                            document.getElementById(`${type}-x`).value = formatCoordinate(coords[0]);
+                            document.getElementById(`${type}-y`).value = formatCoordinate(coords[1]);
+                        }
+                    }
+                });
+            });
+
+            // 添加X、Y输入框事件监听
+            document.querySelectorAll('.coordinate-detail input').forEach(input => {
+                input.addEventListener('input', function() {
+                    const type = this.id.split('-')[0];
+                    const xInput = document.getElementById(`${type}-x`);
+                    const yInput = document.getElementById(`${type}-y`);
+                    const coordInput = document.getElementById(`${type}-coord`);
+                    
+                    if (xInput.value && yInput.value) {
+                        const x = parseFloat(xInput.value);
+                        const y = parseFloat(yInput.value);
+                        if (!isNaN(x) && !isNaN(y)) {
+                            coordInput.value = `${formatCoordinate(x)}, ${formatCoordinate(y)}`;
+                        }
+                    }
+                });
+            });
+
+            // 添加坐标转换按钮事件监听
+            document.querySelectorAll('.convert-btn').forEach(btn => {
+                btn.addEventListener('click', async () => {
+                    const fromType = btn.dataset.from;
+                    const coordInput = document.getElementById(`${fromType}-coord`);
+                    const coordStr = coordInput.value.trim();
+                    
+                    if (!coordStr) {
+                        alert('请输入有效的坐标');
+                        return;
+                    }
+
+                    const coords = coordStr.split(',').map(Number);
+                    if (coords.length !== 2 || isNaN(coords[0]) || isNaN(coords[1])) {
+                        alert('请输入正确的坐标格式（经度,纬度）');
+                        return;
+                    }
+
+                    const [lng, lat] = coords;
+
+                    try {
+                        // 根据源坐标类型进行转换
+                        let gcj02, wgs84, bd09;
+                        
+                        if (fromType === 'gcj02') {
+                            gcj02 = { lng, lat };
+                            wgs84 = await transformCoordinate(lng, lat, 'gcj02_to_wgs84');
+                            bd09 = await transformCoordinate(lng, lat, 'gcj02_to_bd09');
+                        } else if (fromType === 'wgs84') {
+                            wgs84 = { lng, lat };
+                            // WGS84转GCJ02
+                            gcj02 = await transformCoordinate(lng, lat, 'wgs84');
+                            // GCJ02转BD09
+                            bd09 = await transformCoordinate(gcj02.lng, gcj02.lat, 'gcj02_to_bd09');
+                        } else if (fromType === 'bd09') {
+                            bd09 = { lng, lat };
+                            // BD09转GCJ02
+                            gcj02 = await transformCoordinate(lng, lat, 'bd09');
+                            // GCJ02转WGS84
+                            wgs84 = await transformCoordinate(gcj02.lng, gcj02.lat, 'gcj02_to_wgs84');
+                        }
+
+                        // 更新所有坐标显示
+                        document.getElementById('gcj02-coord').value = `${formatCoordinate(gcj02.lng)}, ${formatCoordinate(gcj02.lat)}`;
+                        document.getElementById('gcj02-x').value = formatCoordinate(gcj02.lng);
+                        document.getElementById('gcj02-y').value = formatCoordinate(gcj02.lat);
+
+                        document.getElementById('wgs84-coord').value = `${formatCoordinate(wgs84.lng)}, ${formatCoordinate(wgs84.lat)}`;
+                        document.getElementById('wgs84-x').value = formatCoordinate(wgs84.lng);
+                        document.getElementById('wgs84-y').value = formatCoordinate(wgs84.lat);
+
+                        document.getElementById('bd09-coord').value = `${formatCoordinate(bd09.lng)}, ${formatCoordinate(bd09.lat)}`;
+                        document.getElementById('bd09-x').value = formatCoordinate(bd09.lng);
+                        document.getElementById('bd09-y').value = formatCoordinate(bd09.lat);
+
+                        // 更新地图位置
+                        map.setCenter([gcj02.lng, gcj02.lat]);
+                        marker.setPosition([gcj02.lng, gcj02.lat]);
+
+                        // 更新POI信息
+                        searchNearbyPOI(gcj02.lng, gcj02.lat);
+                    } catch (error) {
+                        console.error('坐标转换失败:', error);
+                        alert('坐标转换失败，请检查坐标值是否正确');
+                    }
+                });
+            });
+
+            // 添加复制按钮事件监听
+            document.querySelectorAll('.copy-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const targetId = this.dataset.copy;
+                    const input = document.getElementById(targetId);
+                    if (input && input.value) {
+                        input.select();
+                        document.execCommand('copy');
+                        // 显示复制成功提示
+                        const originalText = this.textContent;
+                        this.textContent = '已复制';
+                        setTimeout(() => {
+                            this.textContent = originalText;
+                        }, 1000);
+                    }
+                });
+            });
+
+            // 初始化时显示郑州市中心坐标
+            updateCoordinates(113.625368, 34.746599);
+        };
+    </script>
+</body>
+</html> 
